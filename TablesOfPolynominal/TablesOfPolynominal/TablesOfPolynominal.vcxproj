@@ -146,6 +146,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="THashTable.h" />
+    <ClInclude Include="TLineTable.h" />
+    <ClInclude Include="TOrderTable.h" />
+    <ClInclude Include="TPolynominal.h" />
+    <ClInclude Include="TPostfix.h" />
+    <ClInclude Include="TStack.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="THashTable.cpp" />
+    <ClCompile Include="TLineTable.cpp" />
+    <ClCompile Include="TOrderTable.cpp" />
+    <ClCompile Include="TPolynominal.cpp" />
+    <ClCompile Include="TPostfix.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
