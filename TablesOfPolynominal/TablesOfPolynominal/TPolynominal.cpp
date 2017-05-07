@@ -1,6 +1,11 @@
 ﻿#include "TPolynominal.h"
 #include <cmath>
 
+double* TPolynominal::arrArg = nullptr;
+string* TPolynominal::arrVar = nullptr;
+unsigned int TPolynominal::Power = NULL;
+unsigned int TPolynominal::numVar = NULL;
+
 // перевод в массив объявленных переменных
 void TPolynominal::ToArrVar(string strVar)	
 {
