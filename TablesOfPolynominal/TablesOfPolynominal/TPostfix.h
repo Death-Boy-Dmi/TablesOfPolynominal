@@ -34,15 +34,15 @@ class TPostfix
 	TablFunc functions;
 	double Res;
 
-public:
-	TPostfix(string inf);
-	
 	bool CheckChars(); // Проверка на допустимые символы
 	bool CheckAmount(); // Проверка соответствия кол-ва переменных кол-ву операций
 	bool CheckBrackets(); // Проверка количества скобок
 	bool CheckInfix(); // Общая проверка
 	void ArrVarible(); // Выделение из строки переменных и добавление их в массив
-	
+
+public:
+	TPostfix(string inf);
+		
 	string ToPostfix();
 	double Calculate(); // Ввод переменных, вычисление по постфиксной форме
 	string GetInfix() { return infix; }
