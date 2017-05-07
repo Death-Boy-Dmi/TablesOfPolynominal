@@ -154,6 +154,7 @@
     <ClInclude Include="TStack.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="THashTable.cpp" />
     <ClCompile Include="TLineTable.cpp" />
     <ClCompile Include="TOrderTable.cpp" />
