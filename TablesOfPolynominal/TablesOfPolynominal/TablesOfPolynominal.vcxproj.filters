@@ -41,15 +41,6 @@
     <ClCompile Include="TPostfix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="THashTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TLineTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TOrderTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
