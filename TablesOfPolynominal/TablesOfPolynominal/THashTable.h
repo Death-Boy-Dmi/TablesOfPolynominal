@@ -8,6 +8,10 @@ struct THashLine
 	T value;
 
 	THashLine* pNextLine;
+	THashLine()
+	{
+		numOfLine = NULL;
+	}
 };
 template <class T>
 class THashTable
@@ -57,7 +61,7 @@ public:
 		}
 		else
 		{
-			THashLine<T>* p = new THashLine;
+			THashLine<T>* p = new THashLine<T>;
 			*p = line[hashKey];
 			for (size_t i = 0; i < line[hashKey].numOfLine; i++)
 			{
