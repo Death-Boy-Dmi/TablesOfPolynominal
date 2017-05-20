@@ -1,133 +1,111 @@
-#include <string>
+#include "TPolynominal.h"
 
-#define MAX_SIZE 216000
+#define MaxSizeOfTable 65
 
-using namespace std;
- 
-template <class T>
 struct THashLine
 {
-	size_t countOfLink;
-	string nameKey;
-	size_t hashKey;
-	T* pValue;
-	THashLine<T>* pNext;
+	size_t numOfLine;
+	std::string nameOfLine;
+	TPolynominal value;
+
+	THashLine* pNextLine;
 };
-template <class T>
 class THashTable
 {
-private:
-	THashLine<T>* line;
-	size_t numOfLine;
+	THashLine line[MaxSizeOfTable];
 	size_t countOfLine;
-	size_t Hash(string _nameKey)
+
+	size_t Hash(std::string _nameOfLine)
 	{
-		return ((int)(_nameKey[0]) - 65);
+		return ((int)(_nameOfLine[0]) - 65);
 	}
 public:
 	THashTable()
 	{
-		numOfLine = NULL;
 		countOfLine = NULL;
-		line = nullptr;
-		line->nameKey = '\0';
-		line->pValue = nullptr;
-	}
-	THashTable(size_t _numOfLine)
-	{
-		if (_numOfLine > MAX_SIZE || _numOfLine < NULL)
-			throw _numOfLine;
-		numOfLine = _numOfLine;
-		line = new THashLine<T>[MAX_SIZE];
-		countOfLine = NULL;
-	}
-	~THashTable()
-	{
-		while (countOfLine != 0)
-		{
-			delete line[countOfLine];
-			countOfLine--;
-		}
 	}
 	bool IsFull()
 	{
-		return (countOfLine == numOfLine);
+		return (countOfLine == MaxSizeOfTable);
 	}
 	bool IsEmpty()
 	{
 		return (countOfLine == NULL);
 	}
-	bool SearchOfLine(string _nameKey)
+	bool IsFound(std::string _nameOfLine)
 	{
-		if (IsEmpty())
-			return false;
-		THashLine<T>* p = line[Hash(_nameKey)];
-		for (size_t i = 0; i < line[Hash(_nameKey)].countOfLink; i++)
+		size_t hashKey = Hash(_nameOfLine);
+		THashLine* p = new THashLine;
+		*p = line[hashKey];
+		for (size_t i = 0; i < line[hashKey].numOfLine; i++)
 		{
-			if (p->nameKey == _nameKey)
+			if (p->nameOfLine == _nameOfLine)
 				return true;
-			p = p->pNext;
+			p = p->pNextLine;
 		}
 		return false;
 	}
-	void AddLine(string _nameKey, T* _pValue)
+	void AddLine(std::string _nameOfLine, TPolynominal _polinom)
 	{
 		if (IsFull())
-			return false;
-		if (line[Hash(_nameKey)]->countOfLink == 0)
+			throw "Is Full";
+		size_t hashKey = Hash(_nameOfLine);
+		if (line[hashKey].numOfLine == 0)
 		{
-			line[Hash(_nameKey)].hashKey = Hash(_nameKey);
-			line[Hash(_nameKey)].nameKey = _nameKey;
-			line[countOfLine].pValue = _pValue;
-			line[Hash(_nameKey)]->countOfLink++;
+			line[hashKey].nameOfLine = _nameOfLine;
+			line[countOfLine].value = _polinom;
 		}
 		else
 		{
-			THashLine<T>* p = line[Hash(_nameKey)];
-			for (size_t i = 0; i < line[Hash(_nameKey)].countOfLink; i++)
+			THashLine* p = new THashLine;
+			*p = line[hashKey];
+			for (size_t i = 0; i < line[hashKey].numOfLine; i++)
 			{
-				p = p->pNext;
+				p = p->pNextLine;
 			}
-			p->pNext->hashKey = Hash(_nameKey);
-			p->pNext->nameKey = _nameKey;
-			p->pNext->pValue = _pValue;
-			line[Hash(_nameKey)]->countOfLink++;
+			p->pNextLine->nameOfLine = _nameOfLine;
+			p->pNextLine->value = _polinom;
 		}
+		line[hashKey].numOfLine++;
 		countOfLine++;
-
 	}
-	void DeleteLine(string _nameKey)
+	void DeleteLine(string _nameOfLine)
 	{
 		if (IsEmpty())
-			return false;
-		if (!SearchOfLine(_nameKey))
-			return false;
+			throw "Is Empty";
+		if (!IsFound(_nameOfLine))
+			throw "Is Not Found";
 		size_t count = 0;
-		THashLine<T>* p = line[Hash(_nameKey)];
-		while (p->nameKey != _nameKey)
+		size_t hashKey = Hash(_nameOfLine);
+		THashLine* p = new THashLine;
+		*p = line[hashKey];
+		while (p->nameOfLine != _nameOfLine)
 		{
-			p = p->pNext;
+			p = p->pNextLine;
 			count++;
 		}
-		THashLine<T>* pl = line[Hash(_nameKey)];
+		THashLine* pl = new THashLine;
+		*pl = line[hashKey];
 		for (size_t i = 0; i < count - 1; i++)
 		{
-			pl = pl->pNext;
+			pl = pl->pNextLine;
 		}
-		pl->pNext = p->pNext;
+		pl->pNextLine = p->pNextLine;
 		delete p;
-		line[Hash(_nameKey)]->countOfLink--;
+		line[hashKey].numOfLine--;
 		countOfLine--;
 	}
-	T GetValue(string _nameKey)
+	TPolynominal GetPolinominal(std::string _nameOfLine)
 	{
-		if (!SearchOfLine())
-			return false;
-		THashLine<T>* p = line[Hash(_nameKey)];
-		while (p->nameKey != _nameKey)
+		size_t hashKey = Hash(_nameOfLine);
+		THashLine* p = new THashLine;
+		*p = line[hashKey];
+		for (size_t i = 0; i < line[hashKey].numOfLine; i++)
 		{
-			p = p->pNext;
+			if (p->nameOfLine == _nameOfLine)
+				return p->value;
+			p = p->pNextLine;
 		}
-		return p->pValue;
+		throw "Is Not Found";
 	}
 };
