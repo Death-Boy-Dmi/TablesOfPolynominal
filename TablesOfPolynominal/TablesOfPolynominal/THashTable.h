@@ -1,18 +1,18 @@
-#include "TPolynominal.h"
-
 #define MaxSizeOfTable 65
 
+template <class T>
 struct THashLine
 {
 	size_t numOfLine;
 	std::string nameOfLine;
-	TPolynominal value;
+	T value;
 
 	THashLine* pNextLine;
 };
+template <class T>
 class THashTable
 {
-	THashLine line[MaxSizeOfTable];
+	THashLine<T> line[MaxSizeOfTable];
 	size_t countOfLine;
 
 	size_t Hash(std::string _nameOfLine)
@@ -45,7 +45,7 @@ public:
 		}
 		return false;
 	}
-	void AddLine(std::string _nameOfLine, TPolynominal _polinom)
+	void AddLine(std::string _nameOfLine, T _polinom)
 	{
 		if (IsFull())
 			throw "Is Full";
@@ -57,7 +57,7 @@ public:
 		}
 		else
 		{
-			THashLine* p = new THashLine;
+			THashLine<T>* p = new THashLine;
 			*p = line[hashKey];
 			for (size_t i = 0; i < line[hashKey].numOfLine; i++)
 			{
@@ -77,14 +77,14 @@ public:
 			throw "Is Not Found";
 		size_t count = 0;
 		size_t hashKey = Hash(_nameOfLine);
-		THashLine* p = new THashLine;
+		THashLine<T>* p = new THashLine;
 		*p = line[hashKey];
 		while (p->nameOfLine != _nameOfLine)
 		{
 			p = p->pNextLine;
 			count++;
 		}
-		THashLine* pl = new THashLine;
+		THashLine<T>* pl = new THashLine;
 		*pl = line[hashKey];
 		for (size_t i = 0; i < count - 1; i++)
 		{
@@ -95,10 +95,10 @@ public:
 		line[hashKey].numOfLine--;
 		countOfLine--;
 	}
-	TPolynominal GetPolinominal(std::string _nameOfLine)
+	T GetPolinominal(std::string _nameOfLine)
 	{
 		size_t hashKey = Hash(_nameOfLine);
-		THashLine* p = new THashLine;
+		THashLine<T>* p = new THashLine;
 		*p = line[hashKey];
 		for (size_t i = 0; i < line[hashKey].numOfLine; i++)
 		{
