@@ -48,4 +48,5 @@ public:
 	string GetInfix() { return infix; }
 	string GetPostfix() { return postfix; }
 	string* GetArrVar() { return variable; }
+	size_t GetNumOfVar() { return varSize; }
 };

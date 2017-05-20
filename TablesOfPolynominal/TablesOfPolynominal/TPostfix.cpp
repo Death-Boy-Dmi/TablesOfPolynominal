@@ -4,6 +4,7 @@ TPostfix::TPostfix(string inf)
 {
 	infix = inf;
 	CheckInfix();
+	ArrVarible();
 }
 
 bool TPostfix::CheckChars() // Проверка на допустимые символы
@@ -120,8 +121,6 @@ string TPostfix::ToPostfix()
 {
 	string inf = infix;
 	postfix = "";
-	CheckInfix();
-	ArrVarible();
 	inf = inf + "=";
 	TStack<char> operations(MaxSizeString);
 	int i = 0;
