@@ -1,8 +1,12 @@
+#pragma once;
+
 #include <string>
 #include <iostream>
 #include <sstream>
 
 #include "TStack.h"
+#include "THashTable.h"
+#include "TPolynominal.h"
 
 using namespace std;
 
@@ -45,6 +49,7 @@ public:
 		
 	string ToPostfix();
 	double Calculate(); // ¬вод переменных, вычисление по постфиксной форме
+	double Calculate(THashTable/*<TPolynominal>*/ TableOfPolynom); 
 	string GetInfix() { return infix; }
 	string GetPostfix() { return postfix; }
 	string* GetArrVar() { return variable; }

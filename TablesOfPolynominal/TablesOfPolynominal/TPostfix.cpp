@@ -306,3 +306,107 @@ double TPostfix::Calculate() // ¬вод переменных, вычисление по постфиксной форме
 	result = varStack.Get();
 	return Res = result;
 }
+
+double TPostfix::Calculate(THashTable/*<TPolynominal>*/ TableOfPolynom)
+{
+	double* var = new double[varSize];
+	for (int i = 0; i < varSize; i++)
+	{
+
+		string ce = "0123456789.";
+		int j = 0;
+		while (j < variable[i].length())
+		{
+			if (ce.find(variable[i][j]) != std::string::npos)
+				j++;
+			else
+				break;
+		}
+		if (j == variable[i].length())
+		{
+			std::stringstream temp(variable[i]);
+			temp >> var[i];
+		}
+		else
+		{
+			size_t k = 0;
+			while (k < i && i != 0)
+				if (variable[i] == variable[k])
+				{
+					var[i] = var[k];
+					break;
+				}
+				else
+					k++;
+			if (k == i || i == 0)
+			{
+				//cout << variable[i] << " = ";
+				//cin >> var[i];
+				var[i] = TableOfPolynom.GetPolinominal(variable[i]).Calculate();
+				string c = "0123456789.";
+				if (c.find(var[i]) != std::string::npos)
+					throw "Permission incorrect value";
+				cout << endl;
+			}
+			else
+				continue;
+		}
+	}
+	string post = postfix;
+	for (int i = 0; i < post.size(); i++)
+		if (post[i] == ' ')
+			post.erase(i, 1);
+	double tempResult = 0;
+	double result = 0;
+	TStack<double> varStack(varSize);
+	int i = 0;
+	while (post.length() != 0)
+	{
+		while (i < varSize)
+		{
+			if (post.find(variable[i]) == 0)
+			{
+				varStack.Put(var[i]);
+				post.erase(0, variable[i].length());
+				i++;
+				break;
+			}
+			else
+				break;
+		}
+
+		if (post[0] == '*')
+		{
+			double temp = varStack.Get();
+			tempResult = varStack.Get() * temp;
+			varStack.Put(tempResult);
+			post.erase(0, 1);
+		}
+
+		if (post[0] == '/')
+		{
+			double temp = varStack.Get();
+			tempResult = varStack.Get() / temp;
+			varStack.Put(tempResult);
+			post.erase(0, 1);
+		}
+
+		if (post[0] == '+')
+		{
+			double temp = varStack.Get();
+			tempResult = varStack.Get() + temp;
+			varStack.Put(tempResult);
+			post.erase(0, 1);
+		}
+
+		if (post[0] == '-')
+		{
+			double temp = varStack.Get();
+			tempResult = varStack.Get() - temp;
+			varStack.Put(tempResult);
+			post.erase(0, 1);
+		}
+	}
+	result = varStack.Get();
+	return Res = result;
+}
