@@ -10,7 +10,7 @@ struct THashLine
 	std::string nameOfLine;
 	T /*TPolynominal */value;
 
-	THashLine* pNextLine;
+	THashLine<T>* pNextLine;
 	THashLine()
 	{
 		numOfLine = NULL;
@@ -71,10 +71,12 @@ public:
 		}
 		else
 		{
+			line[hashKey].pNextLine = new THashLine<T>;
 			THashLine<T>* p = new THashLine<T>;
 			p = line[hashKey].pNextLine;
 			for (size_t i = 0; i < line[hashKey].numOfLine-1; i++)
 			{
+				p->pNextLine = new THashLine<T>;
 				p = p->pNextLine;
 			}
 			p->nameOfLine = _nameOfLine;
@@ -127,7 +129,7 @@ public:
 	T /*TPolynominal*/ GetPolinominal(std::string _nameOfLine)
 	{
 		size_t hashKey = Hash(_nameOfLine);
-		if (line[hashKey].numOfLine == 1)
+		if (line[hashKey].nameOfLine == _nameOfLine)
 		{
 			return line[hashKey].value;
 		}

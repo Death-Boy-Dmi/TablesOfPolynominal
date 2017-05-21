@@ -51,7 +51,7 @@ void TPolynominal::StreamSetVar()
 	{
 		cout << arrVar[i] << " = ";
 		cin >> arrArg[i];
-		cout << endl;
+		cout << "\n\t";
 	}
 }
 
