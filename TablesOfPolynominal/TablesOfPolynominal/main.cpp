@@ -25,7 +25,7 @@ void main()
 	TPostfix expression(infixStr);
 	expression.ToPostfix();
 	arrVarPol = expression.GetArrVar();
-	THashTable/*<TPolynominal>*/  tableOfPol;
+	THashTable<TPolynominal>  tableOfPol;
 	cout << "Enter the polynominals:\n\t";
 	for (size_t i = 0; i < expression.GetNumOfVar(); i++)
 	{

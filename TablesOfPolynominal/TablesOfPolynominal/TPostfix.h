@@ -49,7 +49,7 @@ public:
 		
 	string ToPostfix();
 	double Calculate(); // ¬вод переменных, вычисление по постфиксной форме
-	double Calculate(THashTable/*<TPolynominal>*/ TableOfPolynom); 
+	double Calculate(THashTable<TPolynominal> TableOfPolynom); 
 	string GetInfix() { return infix; }
 	string GetPostfix() { return postfix; }
 	string* GetArrVar() { return variable; }

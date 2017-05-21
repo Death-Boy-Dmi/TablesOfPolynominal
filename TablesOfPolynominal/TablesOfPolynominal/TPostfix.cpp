@@ -307,7 +307,7 @@ double TPostfix::Calculate() // ¬вод переменных, вычисление по постфиксной форме
 	return Res = result;
 }
 
-double TPostfix::Calculate(THashTable/*<TPolynominal>*/ TableOfPolynom)
+double TPostfix::Calculate(THashTable<TPolynominal> TableOfPolynom)
 {
 	double* var = new double[varSize];
 	for (int i = 0; i < varSize; i++)
