@@ -24,10 +24,10 @@ void main()
 
 	TPostfix expression(infixStr);
 	expression.ToPostfix();
-	arrVarPol = expression.GetArrVar();
+	arrVarPol = expression.GetNameOfPolynominals();
 	THashTable<TPolynominal>  tableOfPol;
 	cout << "Enter the polynominals:\n\n\t";
-	for (size_t i = 0; i < expression.GetNumOfVar(); i++)
+	for (size_t i = 0; i < expression.GetNumOfPolynominals(); i++)
 	{
 		cout << arrVarPol[i] << " = ";
 		string strPol/* = "x^2"*/;

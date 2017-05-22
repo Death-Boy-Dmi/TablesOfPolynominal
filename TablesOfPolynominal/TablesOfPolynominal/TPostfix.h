@@ -43,7 +43,7 @@ class TPostfix
 	bool CheckBrackets(); // Проверка количества скобок
 	bool CheckInfix(); // Общая проверка
 	void ArrVarible(); // Выделение из строки переменных и добавление их в массив
-
+	void DeleteSpaces(string _str);
 public:
 	TPostfix(string inf);
 		
@@ -53,5 +53,7 @@ public:
 	string GetInfix() { return infix; }
 	string GetPostfix() { return postfix; }
 	string* GetArrVar() { return variable; }
+	string* GetNameOfPolynominals();
+	size_t GetNumOfPolynominals();
 	size_t GetNumOfVar() { return varSize; }
 };

@@ -2,6 +2,7 @@
 
 TPostfix::TPostfix(string inf)
 {
+	DeleteSpaces(inf);
 	infix = inf;
 	CheckInfix();
 	ArrVarible();
@@ -114,6 +115,15 @@ void TPostfix::ArrVarible() // Выделение из строки переменных и добавление их в 
 			inf.erase(0, pos + 1);
 			k++;
 		}
+	}
+}
+
+void TPostfix::DeleteSpaces(string _str)
+{
+	for (size_t i = 0; i < _str.length(); i++)
+	{
+		if (_str[i] == ' ')
+			_str.erase(i);
 	}
 }
 
@@ -409,4 +419,50 @@ double TPostfix::Calculate(THashTable<TPolynominal> TableOfPolynom)
 	}
 	result = varStack.Get();
 	return Res = result;
+}
+
+string * TPostfix::GetNameOfPolynominals()
+{
+	string* arrPol;
+	size_t arrSize = GetNumOfPolynominals();
+	arrPol = new string[arrSize];
+	size_t iter = 0;
+	for (size_t i = 0; i < varSize; i++)
+	{	
+		string ce = "0123456789.";
+		int j = 0;
+		while (j < variable[i].length())
+		{
+			if (ce.find(variable[i][j]) != std::string::npos)
+				j++;
+			else
+				break;
+		}
+		if (j != variable[i].length())
+		{
+			arrPol[iter] = variable[i];
+			iter++;
+		}
+	}
+	return arrPol;
+}
+
+size_t TPostfix::GetNumOfPolynominals()
+{
+	size_t arrSize = 0;
+	string ce = "0123456789.";
+	for (size_t i = 0; i < varSize; i++)
+	{
+		int j = 0;
+		while (j < variable[i].length())
+		{
+			if (ce.find(variable[i][j]) != std::string::npos)
+				j++;
+			else
+				break;
+		}
+		if (j != variable[i].length())
+			arrSize++;
+	}
+	return arrSize;
 }

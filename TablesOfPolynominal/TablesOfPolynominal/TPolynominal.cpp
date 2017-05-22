@@ -88,15 +88,18 @@ TPolynominal TPolynominal::operator+(const TPolynominal & polynom)
 			tmp = pF;
 			pR->pNext = tmp;
 			pR = pR->pNext;
+			
 			pF = pF->pNext;
+			continue;
 		}
 		if (pF->monom.degree < pS->monom.degree)
 		{
 			TLink *tmp = new TLink;
 			tmp = pS;
-			pR = tmp;
+			pR->pNext = tmp;
 			pR = pR->pNext;
-			pS = pF->pNext;
+			pS = pS->pNext;
+			continue;
 		}
 		if (pF->monom.degree == pS->monom.degree)
 		{
@@ -107,6 +110,7 @@ TPolynominal TPolynominal::operator+(const TPolynominal & polynom)
 			pF = pF->pNext;
 			pR->pNext = tmp;
 			pR = pR->pNext;
+			continue;
 		}
 	}
 	
@@ -280,7 +284,7 @@ TPolynominal::TPolynominal(string strPol, string strVar)
 	for (size_t i = 0; i < numMonom; i++)
 		for (size_t j = numMonom - 1; j > i; j--)
 			if (arrMonom[j - 1].degree < arrMonom[j].degree)
-				swap(arrMonom[j - 1].degree, arrMonom[j].degree);
+				swap(arrMonom[j - 1], arrMonom[j]);
 
 
 	TLink *p = new TLink;
