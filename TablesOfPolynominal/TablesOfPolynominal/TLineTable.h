@@ -1,3 +1,4 @@
+#pragma once;
 #include <string>
 
 #define MAX_SIZE 100000
@@ -8,7 +9,7 @@ template <class T>
 struct TLine
 {
 	string nameKey;
-	T* pValue;
+	T pValue;
 };
 template <class T>
 class TLineTable
@@ -23,8 +24,6 @@ public:
 		numOfLine = NULL;
 		countOfLine = NULL;
 		line = nullptr;
-		line->nameKey = '\0';
-		line->pValue = nullptr;
 	}
 	TLineTable(size_t _numOfLine)
 	{
@@ -34,14 +33,7 @@ public:
 		line = new TLine<T>[_numOfLine];
 		countOfLine = NULL;
 	}
-	~TLineTable() 
-	{
-		while (countOfLine != 0)
-		{
-			delete line[countOfLine];
-			countOfLine--;
-		}
-	}
+	~TLineTable(){}
 	bool IsFull()
 	{
 		return (countOfLine == numOfLine);
@@ -61,7 +53,7 @@ public:
 		}
 		return -1;
 	}
-	int SearchOfLineByValue(T* _pValue)
+	int SearchOfLineByValue(T _pValue)
 	{
 		for (size_t i = 0; i < countOfLine; i++)
 		{
@@ -70,10 +62,10 @@ public:
 		}
 		return -1;
 	}
-	void AddLine(string _nameKey, T* _pValue)
+	void AddLine(string _nameKey, T _pValue)
 	{
 		if (IsFull())
-			return false;
+			throw "Is Full";
 		line[countOfLine].nameKey = _nameKey;
 		line[countOfLine].pValue = _pValue;
 		countOfLine++;
@@ -81,24 +73,25 @@ public:
 	void DeleteLine(string _nameKey)
 	{
 		if (IsEmpty())
-			return false;
+			throw "Is Empty";
 		int pos = SearchOfLineByName(_nameKey);
 		if (pos == -1)
-			return false;
+			throw "Is Not Found";
 
 		line[pos].nameKey = line[countOfLine].nameKey;
 		line[pos].pValue = line[countOfLine].pValue;
 		
 		line[countOfLine].nameKey = '\0';
-		line[countOfLine].pValue = nullptr;
 		
 		countOfLine--;
 	}
 	T GetValue(string _nameKey)
 	{
+		if (IsEmpty())
+			throw "Is Empty";
 		int pos = SearchOfLineByName(_nameKey);
 		if (pos == -1)
-			return false;
+			throw "Is Not Found";
 		return line[pos].pValue;
 	}
 };

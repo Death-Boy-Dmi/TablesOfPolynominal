@@ -153,6 +153,8 @@
     <ClCompile Include="..\TablesOfPolynominal\TablesOfPolynominal\TPostfix.cpp" />
     <ClCompile Include="test_main.cpp" />
     <ClCompile Include="test_THashTable.cpp" />
+    <ClCompile Include="test_TLineTable.cpp" />
+    <ClCompile Include="test_TOrderTable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

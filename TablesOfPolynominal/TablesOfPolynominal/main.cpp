@@ -2,6 +2,8 @@
 #include "TPolynominal.h"
 #include "TPostfix.h"
 #include "THashTable.h"
+//#include "TLineTable.h"
+#include "TOrderTable.h"
 using namespace std;
 void main()
 {

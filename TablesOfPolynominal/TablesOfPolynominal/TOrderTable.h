@@ -1,3 +1,4 @@
+#pragma once;
 #include <string>
 
 #define MAX_SIZE 100000
@@ -8,7 +9,7 @@ template <class T>
 struct TLine
 {
 	string nameKey;
-	T* pValue;
+	T pValue;
 };
 template <class T>
 class TOrderTable
@@ -32,14 +33,7 @@ public:
 		line = new TLine<T>[_numOfLine];
 		countOfLine = NULL;
 	}
-	~TOrderTable() 
-	{
-		while (countOfLine != 0)
-		{
-			delete line[countOfLine];
-			countOfLine--;
-		}
-	}
+	~TOrderTable(){}
 	bool IsFull()
 	{
 		return (countOfLine == numOfLine);
@@ -59,7 +53,7 @@ public:
 		}
 		return -1;
 	}
-	int SearchOfLineByValue(T* _pValue)
+	int SearchOfLineByValue(T _pValue)
 	{
 		for (size_t i = 0; i < countOfLine; i++)
 		{
@@ -68,46 +62,58 @@ public:
 		}
 		return -1;
 	}
-	void AddLine(string _nameKey, T* _pValue)
+	void AddLine(string _nameKey, T _pValue)
 	{
 		if (IsFull())
-			return false;
+			throw "Is Full";
 		TLine<T> temp;
 		int pos = 0;
-		while (_pValue >= line[pos].pValue)
+		while (_pValue <= line[pos].pValue)
 			pos++;
-
-		temp.nameKey = line[pos].nameKey;
-		temp.pValue = line[pos].pValue;
+		temp = line[pos];
 		line[pos].nameKey = _nameKey;
 		line[pos].pValue = _pValue;
 		countOfLine++;
-		line[countOfLine].nameKey = '\0';
-		line[countOfLine].pValue = nullptr;
+		int flag = 1;
+		TLine<T> tmp;
 		for (size_t i = pos + 1; i < countOfLine; i++)
-			swap(line[i], temp);
+		{
+			if (flag)
+			{
+				tmp = line[i];
+				line[i] = temp;
+				flag--;
+			}
+			else
+			{
+				temp = line[i];
+				line[i] = tmp;
+				flag++;
+			}
+		}
 	}
 	void DeleteLine(string _nameKey)
 	{
 		if (IsEmpty())
-			return false;
+			throw "Is Empty";
 		int pos = SearchOfLineByName(_nameKey);
 		if (pos == -1)
-			return false;
+			throw "Is Not Found";
 		for (size_t i = pos; i < countOfLine; i++)
 		{
 			line[i].nameKey = line[i + 1].nameKey;
 			line[i].pValue = line[i + 1].pValue;
 		}
 		line[countOfLine].nameKey = '\0';
-		line[countOfLine].pValue = nullptr;
 		countOfLine--;
 	}
 	T GetValue(string _nameKey)
 	{
+		if (IsEmpty())
+			throw "Is Empty";
 		int pos = SearchOfLineByName(_nameKey);
 		if (pos == -1)
-			return false;
+			throw "Is Not Found";
 		return line[pos].pValue;
 	}
 };

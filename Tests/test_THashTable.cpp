@@ -1,5 +1,3 @@
-#include <conio.h>
-
 #include"../gtest/gtest.h"
 
 #include "../TablesOfPolynominal/TablesOfPolynominal/THashTable.h"
