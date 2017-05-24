@@ -2,8 +2,8 @@
 #include "TPolynominal.h"
 #include "TPostfix.h"
 #include "THashTable.h"
-//#include "TLineTable.h"
-#include "TOrderTable.h"
+#include "TLineTable.h"
+//#include "TOrderTable.h"
 using namespace std;
 void main()
 {
@@ -29,14 +29,20 @@ void main()
 	arrVarPol = expression.GetNameOfPolynominals();
 	THashTable<TPolynominal>  tableOfPol;
 	cout << "Enter the polynominals:\n\n\t";
-	for (size_t i = 0; i < expression.GetNumOfPolynominals(); i++)
+	cout << arrVarPol[0] << " = ";
+	string strPol/* = "x^2"*/;
+	cin >> strPol;
+	cout << "\n\t";
+	TPolynominal _pol(strPol, strVar);
+	_pol.StreamSetVar();
+	tableOfPol.AddLine(arrVarPol[0], _pol);
+	for (size_t i = 1; i < expression.GetNumOfPolynominals(); i++)
 	{
 		cout << arrVarPol[i] << " = ";
 		string strPol/* = "x^2"*/;
 		cin >> strPol;
 		cout << "\n\t";
 		TPolynominal pol(strPol, strVar);
-		pol.StreamSetVar();
 		tableOfPol.AddLine(arrVarPol[i], pol);
 	}
 
