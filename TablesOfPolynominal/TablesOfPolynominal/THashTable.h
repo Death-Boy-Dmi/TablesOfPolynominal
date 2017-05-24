@@ -1,7 +1,7 @@
 #pragma once;
 #include "TPolynominal.h"
 
-#define MaxSizeOfTable 65
+#define MaxSizeOfTable 26
 
 template <class T>
 struct THashLine
@@ -42,13 +42,14 @@ public:
 	bool IsFound(std::string _nameOfLine)
 	{
 		size_t hashKey = Hash(_nameOfLine);
+		if (line[hashKey].numOfLine == 0) return false;
 		if (line[hashKey].nameOfLine == _nameOfLine)
 		{
 			return true;
 		}
 		else
 		{
-			THashLine* p = new THashLine<T>;
+			THashLine<T>* p = new THashLine<T>;
 			p = line[hashKey].pNextLine;
 			for (size_t i = 0; i < line[hashKey].numOfLine - 1; i++)
 			{
@@ -84,26 +85,22 @@ public:
 		}
 		line[hashKey].numOfLine++;
 		countOfLine++;
+
 	}
 	void DeleteLine(std::string _nameOfLine)
 	{
 		if (IsEmpty())
 			throw "Is Empty";
-		if (!IsFound(_nameOfLine))
+		if (IsFound(_nameOfLine) == false)
 			throw "Is Not Found";
 		size_t count = 0;
 		size_t hashKey = Hash(_nameOfLine);
 		if (line[hashKey].numOfLine == 1)
 		{
-			THashLine<T>* p = new THashLine<T>;
-			p = line[hashKey].pNextLine;
-			for (size_t i = 0; i < line[hashKey].numOfLine - 1; i++)
-			{
-				p = p->pNextLine;
-			}
-			line[hashKey].nameOfLine = p->nameOfLine;
-			line[hashKey].value = p->value;
-			delete p;
+			T _polinom;
+			line[hashKey].nameOfLine = "";
+			line[hashKey].value = _polinom;
+
 		}
 		else
 		{
@@ -114,7 +111,7 @@ public:
 				p = p->pNextLine;
 				count++;
 			}
-			THashLine<T> pl = new THashLine<T>;
+			THashLine<T>* pl = new THashLine<T>;
 			pl = line[hashKey].pNextLine;
 			for (size_t i = 0; i < count - 2; i++)
 			{
@@ -128,6 +125,10 @@ public:
 	}
 	T /*TPolynominal*/ GetPolinominal(std::string _nameOfLine)
 	{
+		if (IsEmpty())
+			throw "Is Empty";
+		if (IsFound(_nameOfLine) == false)
+			throw "Is Not Found";
 		size_t hashKey = Hash(_nameOfLine);
 		if (line[hashKey].nameOfLine == _nameOfLine)
 		{
