@@ -100,7 +100,7 @@ TEST(TOrderTable, can_not_use_AddLine_when_IsFull)
 }
 TEST(TOrderTable, can_use_DeleteLine)
 {
-	TOrderTable<int> table(1);
+	TOrderTable<int> table(2);
 	int _pol = 0;
 	table.AddLine("P", _pol);
 	ASSERT_NO_THROW(table.DeleteLine("P"));

@@ -38,6 +38,7 @@ public:
 	static string* arrVar;		// массив объявленных переменных
 
 	TPolynominal(string strPol, string strVar);
+	TPolynominal(string strPol);
 	TPolynominal();
 	
 	double* GetArrArg() { return arrArg; }

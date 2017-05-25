@@ -1,7 +1,7 @@
 #pragma once;
 #include "TPolynominal.h"
 
-#define MaxSizeOfTable 26
+#define MaxSizeOfTable 36
 
 template <class T>
 struct THashLine
@@ -24,7 +24,7 @@ class THashTable
 
 	size_t Hash(std::string _nameOfLine)
 	{
-		return ((int)(_nameOfLine[0]) - 65);
+		return ((int)(_nameOfLine[0]) - 48);
 	}
 public:
 	THashTable()

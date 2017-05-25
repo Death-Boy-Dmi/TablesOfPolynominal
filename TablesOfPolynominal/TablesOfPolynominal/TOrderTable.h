@@ -99,7 +99,7 @@ public:
 		int pos = SearchOfLineByName(_nameKey);
 		if (pos == -1)
 			throw "Is Not Found";
-		for (size_t i = pos; i < countOfLine; i++)
+		for (size_t i = pos; i < countOfLine - 1; i++)
 		{
 			line[i].nameKey = line[i + 1].nameKey;
 			line[i].pValue = line[i + 1].pValue;

@@ -99,7 +99,7 @@ TEST(TLineTable, can_not_use_AddLine_when_IsFull)
 }
 TEST(TLineTable, can_use_DeleteLine)
 {
-	TLineTable<TPolynominal> table(1);
+	TLineTable<TPolynominal> table(2);
 	TPolynominal _pol;
 	table.AddLine("P", _pol);
 	ASSERT_NO_THROW(table.DeleteLine("P"));

@@ -316,6 +316,103 @@ double TPostfix::Calculate() // ¬вод переменных, вычисление по постфиксной форме
 	result = varStack.Get();
 	return Res = result;
 }
+TPolynominal TPostfix::CalculatePolynom(THashTable<TPolynominal> TableOfPolynom) // ¬вод переменных, вычисление по постфиксной форме
+{
+	THashTable<TPolynominal> var = TableOfPolynom;
+	for (int i = 0; i < varSize; i++)
+	{
+
+		string ce = "0123456789.";
+		int j = 0;
+		while (j < variable[i].length())
+		{
+			if (ce.find(variable[i][j]) != std::string::npos)
+				j++;
+			else
+				break;
+		}
+		if (j == variable[i].length())
+		{
+			TPolynominal _p(variable[i]);
+			var.GetPolinominal(variable[i]) = _p;
+		}
+		else
+		{
+			size_t k = 0;
+			while (k < i && i != 0)
+				if (variable[i] == variable[k])
+				{
+					var.GetPolinominal(variable[i]) = var.GetPolinominal(variable[k]);
+					break;
+				}
+				else
+					k++;
+			if (k == i || i == 0)
+			{
+				TPolynominal _p(variable[i]);
+				var.GetPolinominal(variable[i]) = _p;
+			}
+			else
+				continue;
+		}
+	}
+	string post = postfix;
+	for (int i = 0; i < post.size(); i++)
+		if (post[i] == ' ')
+			post.erase(i, 1);
+	TPolynominal tempResult;
+	TPolynominal result;
+	TStack<TPolynominal> varStack(varSize);
+	int i = 0;
+	while (post.length() != 0)
+	{
+		while (i < varSize)
+		{
+			if (post.find(variable[i]) == 0)
+			{
+				varStack.Put(var.GetPolinominal(variable[i]));
+				post.erase(0, variable[i].length());
+				i++;
+				break;
+			}
+			else
+				break;
+		}
+
+		if (post[0] == '*')
+		{
+			double * arr = new double[TPolynominal::numVar];
+			for (size_t i = 0; i < TPolynominal::numVar; i++)
+			{
+				arr[i] = 1;
+			}
+			tempResult = varStack.Get();
+			tempResult.SetVar(arr);
+			double temp = varStack.Get().Calculate();
+			tempResult = tempResult * temp;
+			varStack.Put(tempResult);
+			post.erase(0, 1);
+		}
+
+		if (post[0] == '+')
+		{
+			TPolynominal temp = varStack.Get();
+			tempResult = varStack.Get() + temp;
+			varStack.Put(tempResult);
+			post.erase(0, 1);
+		}
+
+		if (post[0] == '-')
+		{
+			TPolynominal temp = varStack.Get();
+			tempResult = varStack.Get() + temp*(-1);
+			varStack.Put(tempResult);
+			post.erase(0, 1);
+		}
+	}
+	result = varStack.Get();
+	return result;
+}
 
 double TPostfix::Calculate(THashTable<TPolynominal> TableOfPolynom)
 {
@@ -424,25 +521,13 @@ double TPostfix::Calculate(THashTable<TPolynominal> TableOfPolynom)
 string * TPostfix::GetNameOfPolynominals()
 {
 	string* arrPol;
-	size_t arrSize = GetNumOfPolynominals();
+	size_t arrSize = GetNumOfVar();
 	arrPol = new string[arrSize];
 	size_t iter = 0;
 	for (size_t i = 0; i < varSize; i++)
-	{	
-		string ce = "0123456789.";
-		int j = 0;
-		while (j < variable[i].length())
-		{
-			if (ce.find(variable[i][j]) != std::string::npos)
-				j++;
-			else
-				break;
-		}
-		if (j != variable[i].length())
-		{
-			arrPol[iter] = variable[i];
-			iter++;
-		}
+	{
+		arrPol[iter] = variable[i];
+		iter++;
 	}
 	return arrPol;
 }

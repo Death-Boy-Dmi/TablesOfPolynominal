@@ -48,6 +48,7 @@ public:
 	TPostfix(string inf);
 		
 	string ToPostfix();
+	TPolynominal CalculatePolynom(THashTable<TPolynominal> TableOfPolynom); // ¬вод переменных, вычисление по постфиксной форме
 	double Calculate(); // ¬вод переменных, вычисление по постфиксной форме
 	double Calculate(THashTable<TPolynominal> TableOfPolynom); 
 	string GetInfix() { return infix; }

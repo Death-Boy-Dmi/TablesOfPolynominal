@@ -29,26 +29,36 @@ void main()
 	arrVarPol = expression.GetNameOfPolynominals();
 	THashTable<TPolynominal>  tableOfPol;
 	cout << "Enter the polynominals:\n\n\t";
-	cout << arrVarPol[0] << " = ";
-	string strPol/* = "x^2"*/;
-	cin >> strPol;
-	cout << "\n\t";
-	TPolynominal _pol(strPol, strVar);
-	_pol.StreamSetVar();
-	tableOfPol.AddLine(arrVarPol[0], _pol);
-	for (size_t i = 1; i < expression.GetNumOfPolynominals(); i++)
+	for (size_t i = 0; i < expression.GetNumOfVar(); i++)
 	{
-		cout << arrVarPol[i] << " = ";
-		string strPol/* = "x^2"*/;
-		cin >> strPol;
-		cout << "\n\t";
-		TPolynominal pol(strPol, strVar);
-		tableOfPol.AddLine(arrVarPol[i], pol);
+		string ce = "0123456789.";
+		int j = 0;
+		while (j < arrVarPol[i].length())
+		{
+			if (ce.find(arrVarPol[i][j]) != std::string::npos)
+				j++;
+			else
+				break;
+		}
+		if (j == arrVarPol[i].length())
+		{
+			TPolynominal _p(arrVarPol[i]);
+			tableOfPol.AddLine(arrVarPol[i], _p);
+		}
+		else
+		{
+			cout << arrVarPol[i] << " = ";
+			string strPol/* = "x^2"*/;
+			cin >> strPol;
+			cout << "\n\t";
+			TPolynominal pol(strPol, strVar);
+			tableOfPol.AddLine(arrVarPol[i], pol);
+		}
 	}
 
-	double result = expression.Calculate(tableOfPol);
+	TPolynominal result = expression.CalculatePolynom(tableOfPol);
 
-	cout << "\tresult = " << result << endl;
+	cout << "\tresult = " << result.ToString() << endl;
 
 	system("PAUSE");
 }

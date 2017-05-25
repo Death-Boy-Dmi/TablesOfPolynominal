@@ -78,8 +78,8 @@ public:
 		if (pos == -1)
 			throw "Is Not Found";
 
-		line[pos].nameKey = line[countOfLine].nameKey;
-		line[pos].pValue = line[countOfLine].pValue;
+		line[pos].nameKey = line[countOfLine-1].nameKey;
+		line[pos].pValue = line[countOfLine-1].pValue;
 		
 		line[countOfLine].nameKey = '\0';
 		
